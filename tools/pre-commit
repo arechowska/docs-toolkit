@@ -1,0 +1,35 @@
+#!/bin/bash
+# Git pre-commit hook — автопроверка и сжатие перед коммитом.
+#
+# Установка (из корня проекта):
+#   cp tools/pre-commit .git/hooks/pre-commit
+#   chmod +x .git/hooks/pre-commit
+
+set -e
+
+# ── 1. Сжатие новых/изменённых PNG ────────────────────────────────────────────
+if command -v oxipng &>/dev/null; then
+  STAGED_PNG=$(git diff --cached --name-only | grep "\.png$" || true)
+  if [ -n "$STAGED_PNG" ]; then
+    echo "→ Сжатие PNG..."
+    echo "$STAGED_PNG" | xargs oxipng -o 4 --strip safe --quiet
+    echo "$STAGED_PNG" | xargs git add
+    echo "  ✓ PNG сжаты"
+  fi
+else
+  echo "  ! oxipng не установлен — PNG не сжимаются (brew install oxipng)"
+fi
+
+# ── 2. Проверка стиля изменённых .md файлов ───────────────────────────────────
+STAGED_MD=$(git diff --cached --name-only | grep "\.md$" || true)
+if [ -n "$STAGED_MD" ]; then
+  echo "→ Проверка стиля..."
+  if python3 tools/doccheck.py --quiet $STAGED_MD; then
+    echo "  ✓ Стиль в порядке"
+  else
+    echo ""
+    echo "  Запустите: python3 tools/doccheck.py --fix"
+    echo "  Затем добавьте исправленные файлы и повторите коммит."
+    exit 1
+  fi
+fi

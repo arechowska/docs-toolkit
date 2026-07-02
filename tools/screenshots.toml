@@ -1,0 +1,124 @@
+# screenshots.toml — список экранов для автоматических скриншотов
+# Скрипт: tools/screenshots.py
+
+[project]
+base_url   = "https://test.bank.com"     # URL тестовой среды
+output_dir = "docs/user-guide/media"     # куда сохранять PNG
+
+[project.window]
+width  = 1280
+height = 900
+
+# ── Авторизация ────────────────────────────────────────────────────────────────
+[login]
+url              = "/login"
+username_field   = "username"      # name= поля логина
+password_field   = "password"      # name= поля пароля
+submit_selector  = "button[type=submit]"
+username         = "test_user"     # ← заменить
+password         = "test_pass"     # ← заменить
+success_url      = "/dashboard"    # URL после успешного входа
+
+# ── Экраны ─────────────────────────────────────────────────────────────────────
+# id          — уникальный идентификатор (для --page)
+# url         — путь после base_url
+# file        — имя файла скриншота
+# description — что на экране (для отчёта)
+# wait_for    — CSS-селектор элемента, дождаться загрузки (опционально)
+# delay       — пауза в секундах перед съёмкой (опционально)
+
+# Тип 1: Список — снимаем только контентную область без бокового меню
+[[pages]]
+id          = "account_list"
+url         = "/accounts"
+file        = "account_list.png"
+description = "Список счетов"
+element     = ".main-content"     # ← CSS-селектор контентной области (уточнить у разработчика)
+
+[[pages]]
+id          = "deposit_list"
+url         = "/deposits"
+file        = "deposit_list.png"
+description = "Список депозитов"
+element     = ".main-content"
+
+# Тип 2: Форма — снимаем блок формы
+[[pages]]
+id          = "payment_order"
+url         = "/payments/payment-order"
+file        = "payment_order_form.png"
+description = "Платежное поручение — форма"
+element     = ".form-container"   # ← CSS-селектор формы (уточнить у разработчика)
+wait_for    = ".form-container"
+
+[[pages]]
+id          = "own_transfer"
+url         = "/payments/own-transfer"
+file        = "own_transfer_form.png"
+description = "Перевод между своими счетами — форма"
+element     = ".form-container"
+
+[[pages]]
+id          = "salary_payment"
+url         = "/payments/salary"
+file        = "salary_payment_form.png"
+description = "Зарплатный платеж — форма"
+element     = ".form-container"
+
+[[pages]]
+id          = "account_statement"
+url         = "/accounts/statement"
+file        = "account_statement.png"
+description = "Выписка по счету"
+element     = ".main-content"
+
+[[pages]]
+id          = "currency_conversion"
+url         = "/currency/conversion"
+file        = "currency_conversion_form.png"
+description = "Конвертация валюты — форма"
+element     = ".form-container"
+
+[[pages]]
+id          = "international_payment"
+url         = "/currency/international"
+file        = "international_payment_form.png"
+description = "Международный платеж — форма"
+element     = ".form-container"
+
+[[pages]]
+id          = "deposit_opening"
+url         = "/deposits/new"
+file        = "deposit_opening_form.png"
+description = "Заявка на открытие депозита — форма"
+element     = ".form-container"
+
+[[pages]]
+id          = "bank_correspondence"
+url         = "/messages/new"
+file        = "bank_correspondence_form.png"
+description = "Написать письмо — форма"
+element     = ".form-container"
+
+# Тип 3: Модальное окно — кликаем кнопку, ждём окно, снимаем
+[[pages]]
+id          = "sign_modal"
+url         = "/payments/payment-order/1"   # страница с готовым документом
+file        = "sign_modal.png"
+description = "Окно подписания документа"
+element     = ".modal-dialog"               # ← CSS-селектор модального окна
+actions     = [
+  {click = "button.sign-btn"},              # ← кнопка Подписать (уточнить у разработчика)
+  {wait  = ".modal-dialog"},
+]
+
+[[pages]]
+id          = "operations_menu"
+url         = "/payments/payment-order/1"
+file        = "operations_menu.png"
+description = "Меню операций по кнопке ⋮"
+element     = ".dropdown-menu"
+actions     = [
+  {click = "button.actions-btn"},           # ← кнопка вызова меню
+  {wait  = ".dropdown-menu"},
+]

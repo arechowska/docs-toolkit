@@ -1,0 +1,61 @@
+# doccheck.toml — правила проверки документации
+# Скрипт: github.com/yourname/doc-tools
+
+[project]
+name   = "My Project"
+docs   = "docs/"
+ignore = ["docs/stylesheets/"]
+
+# ── Автоисправление (python3 doccheck.py --fix) ────────────────────────────────
+
+[[fix]]
+pattern     = "ё"
+replacement = "е"
+description = "ё → е"
+
+[[fix]]
+pattern     = "Ё"
+replacement = "Е"
+description = "Ё → Е"
+
+[[fix]]
+pattern     = '!!! note "Примечание\."'
+replacement = '!!! note "Примечание"'
+description = "точка в заголовке примечания"
+
+[[fix]]
+pattern     = '!!! note "Примечание!"'
+replacement = '!!! note "Примечание"'
+description = "знак в заголовке примечания"
+
+[[fix]]
+pattern     = '!!! warning "Внимание!"'
+replacement = '!!! warning "Внимание"'
+description = "восклицательный в заголовке предупреждения"
+
+[[fix]]
+pattern     = '!!! warning "Внимание\."'
+replacement = '!!! warning "Внимание"'
+description = "точка в заголовке предупреждения"
+
+# ── Предупреждения (не исправляются автоматически) ────────────────────────────
+
+[[check]]
+pattern     = '!\[\]\('
+description = "Изображение без alt-текста"
+severity    = "warn"
+
+[[check]]
+pattern     = '\*\*[^*\n]+\*\* —'
+description = "Тире после термина — заменить на двоеточие"
+severity    = "warn"
+
+[[check]]
+pattern     = '\bзадач[уаи]\b'
+description = "Слово «задача» — заменить на «раздел»"
+severity    = "warn"
+
+[[check]]
+pattern     = 'Перейдите в'
+description = "Использовать «Откройте» вместо «Перейдите в»"
+severity    = "warn"
