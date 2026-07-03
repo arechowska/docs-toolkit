@@ -251,6 +251,15 @@ python3 tools/screenshots.py --config tools/demo/screenshots.demo.toml
 
 This logs in, opens the demo form, and saves an element-only screenshot to `tools/demo/output/`.
 
+## Tests
+
+Unit tests cover `find_files` (including a regression test for the ignore-path bug), `check_links`, `process_file`, and `rename_images.slugify`.
+
+```bash
+pip install pytest
+python3 -m pytest tests/ -v
+```
+
 ## Repository structure
 
 ```text
@@ -264,5 +273,7 @@ demo/                — self-contained example for screenshots.py, no real app 
 README.md            — this file
 README.ru.md         — Russian version
 ```
+
+Unit tests live in `tests/` at the repository root (not in `tools/`, since they test the tools rather than being one).
 
 `doccheck.toml` and `screenshots.toml` are kept per-project, not in this repo.

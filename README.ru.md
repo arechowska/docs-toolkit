@@ -257,6 +257,15 @@ python3 tools/screenshots.py --config tools/demo/screenshots.demo.toml
 
 Скрипт залогинится, откроет демо-форму и сохранит скриншот только этого элемента в `tools/demo/output/`.
 
+## Тесты
+
+Юнит-тесты покрывают `find_files` (включая regression-тест на баг с `ignore`), `check_links`, `process_file` и `rename_images.slugify`.
+
+```bash
+pip install pytest
+python3 -m pytest tests/ -v
+```
+
 ## Структура репозитория
 
 ```text
@@ -270,5 +279,7 @@ demo/              — самодостаточный пример для screen
 README.ru.md       — этот файл
 README.md          — английская версия
 ```
+
+Юнит-тесты лежат в `tests/` в корне репозитория (не в `tools/`, поскольку они проверяют инструменты, а не являются одним из них).
 
 `doccheck.toml` и `screenshots.toml` хранятся в каждом проекте отдельно.
