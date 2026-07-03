@@ -51,6 +51,8 @@ My Project — checked: 44 files
 | `!` | Warning — worth a manual look |
 | `×` | Error — must be fixed manually, blocks CI |
 
+**Real-world example:** run against a bilingual (RU/EN) technical documentation project — 38 Markdown files, ~7,200 words — a full check completes in under a second, with 0 broken internal links and 0 missing alt-text. (That project had no screenshots yet, so `rename_images`/`screenshots` weren't applicable there.)
+
 ### Requirements
 
 - Python 3.11+ (no dependencies)
