@@ -1,8 +1,7 @@
 # docs-toolkit
 
-Documentation toolkit: a Markdown linter/autofixer, a pre-commit hook, VS Code snippets, screenshot renaming, and Selenium-based screenshot automation.
-
-*Built for Russian-language technical documentation — the default rules and examples below check Russian typography and style conventions. The engines themselves are language-agnostic; you just write your own config/rules.*
+A language-agnostic documentation toolkit: Markdown linter/autofixer, pre-commit hook, VS Code snippets, screenshot renaming, and Selenium-based screenshot automation.
+Configure your own style rules and conventions. Default examples use Russian typography, but the engines work with any language.
 
 *Русская версия: [README.ru.md](README.ru.md)*
 
