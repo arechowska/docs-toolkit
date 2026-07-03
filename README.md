@@ -1,5 +1,7 @@
 # docs-toolkit
 
+[![Check](https://github.com/arechowska/docs-toolkit/actions/workflows/check.yml/badge.svg)](https://github.com/arechowska/docs-toolkit/actions/workflows/check.yml)
+
 A language-agnostic documentation toolkit: Markdown linter/autofixer, pre-commit hook, VS Code snippets, screenshot renaming, and Selenium-based screenshot automation.
 Configure your own style rules and conventions. Default examples use Russian typography, but the engines work with any language.
 

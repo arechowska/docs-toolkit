@@ -1,5 +1,7 @@
 # docs-toolkit
 
+[![Check](https://github.com/arechowska/docs-toolkit/actions/workflows/check.yml/badge.svg)](https://github.com/arechowska/docs-toolkit/actions/workflows/check.yml)
+
 Набор инструментов для документации: линтер/автофиксер Markdown, pre-commit хук, сниппеты VS Code, переименование скриншотов и автоматизация скриншотов через Selenium.
 
 ## Что внутри
