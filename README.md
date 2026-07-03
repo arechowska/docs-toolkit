@@ -1,12 +1,29 @@
-# doccheck
+# docs-toolkit
 
-A Markdown documentation linter and autofixer. Checks style, fixes common mistakes, and finds broken links. Rules are defined in a config file, so it works with any project.
+Documentation toolkit: a Markdown linter/autofixer, a pre-commit hook, VS Code snippets, screenshot renaming, and Selenium-based screenshot automation.
 
-*Built for Russian-language technical documentation — the default rules and examples below check Russian typography and style conventions. The engine itself (regex-based fix/check rules) works for any language; you just write your own `doccheck.toml` rules.*
+*Built for Russian-language technical documentation — the default rules and examples below check Russian typography and style conventions. The engines themselves are language-agnostic; you just write your own config/rules.*
 
 *Русская версия: [README.ru.md](README.ru.md)*
 
-## Features
+## What's inside
+
+| Tool | What it does |
+| --- | --- |
+| [doccheck](#doccheck) | Markdown linter and autofixer — style checks, broken links, config-driven rules |
+| [Makefile](#makefile--quick-commands) | Short commands (`make check`, `make fix`) wrapping doccheck |
+| [pre-commit hook](#pre-commit-hook) | Runs doccheck and compresses PNGs automatically before every commit |
+| [VS Code snippets](#vs-code-snippets) | Fast-typing blocks for notes, warnings, navigation paths, form fields |
+| [rename_images](#rename_images--screenshot-renaming) | Renames `imageN.png` files from Word/Pandoc conversion using captions |
+| [screenshots](#screenshots--automated-screenshots) | Selenium-based screenshot capture, with a runnable demo (no real app needed) |
+
+Detailed description of each tool follows below.
+
+## doccheck
+
+A Markdown documentation linter and autofixer. Checks style, fixes common mistakes, and finds broken links. Rules are defined in a config file, so it works with any project.
+
+### Features
 
 - **Autofix** — replaces letters, punctuation, and patterns defined in the config
 - **Style checks** — warns about issues that cannot be fixed automatically
@@ -35,12 +52,12 @@ My Project — checked: 44 files
 | `!` | Warning — worth a manual look |
 | `×` | Error — must be fixed manually, blocks CI |
 
-## Requirements
+### Requirements
 
 - Python 3.11+ (no dependencies)
 - Python 3.10: `pip install tomli`
 
-## Quick start
+### Quick start
 
 **1. Copy the script into your project:**
 
@@ -62,7 +79,7 @@ This opens `doccheck.toml` — edit the rules for your project.
 python3 doccheck.py
 ```
 
-## Commands
+### Commands
 
 ```bash
 # Check all documentation
@@ -84,7 +101,7 @@ python3 doccheck.py --config path/to/custom.toml
 python3 doccheck.py --init
 ```
 
-## Configuration
+### Configuration
 
 All rules live in `doccheck.toml`, next to your docs project. These are the actual default rules — written for Russian text, shown here as a real example of what the config format looks like:
 
@@ -119,7 +136,7 @@ severity    = "warn"
 
 To adapt this for another language, just replace the `pattern`/`replacement`/`description` values with your own style rules — the engine is language-agnostic.
 
-### Severity levels
+#### Severity levels
 
 | Value | Behavior |
 | --- | --- |
