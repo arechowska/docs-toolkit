@@ -118,9 +118,14 @@ def find_files(paths: list[str], ignore: list[str]) -> list[str]:
             result.extend(glob.glob(f"{path}/**/*.md", recursive=True))
 
     if ignore:
+        ignore_norm = [os.path.normpath(i) for i in ignore]
         result = [
             f for f in result
-            if not any(ign.rstrip("/") in f for ign in ignore)
+            if not any(
+                os.path.normpath(f) == ign
+                or os.path.normpath(f).startswith(ign + os.sep)
+                for ign in ignore_norm
+            )
         ]
     return sorted(result)
 
