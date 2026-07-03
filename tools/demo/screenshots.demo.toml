@@ -1,0 +1,30 @@
+# screenshots.demo.toml — самодостаточный пример без реального приложения
+#
+# Запуск:
+#   python3 -m http.server 8010 --directory tools/demo
+#   python3 tools/screenshots.py --config tools/demo/screenshots.demo.toml
+
+[project]
+base_url   = "http://localhost:8010"
+output_dir = "tools/demo/output"
+
+[project.window]
+width  = 1280
+height = 900
+
+[login]
+url              = "/login.html"
+username_field   = "username"
+password_field   = "password"
+submit_selector  = "button[type=submit]"
+username         = "demo"
+password         = "demo"
+success_url      = "dashboard.html"
+
+[[pages]]
+id          = "payment_form"
+url         = "/dashboard.html"
+file        = "payment_form.png"
+description = "Payment form (element-only screenshot)"
+element     = "#payment-form"
+wait_for    = "#payment-form"

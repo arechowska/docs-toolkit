@@ -90,8 +90,25 @@ def login(driver: webdriver.Chrome, config: dict) -> None:
 
 # ── Скриншоты ──────────────────────────────────────────────────────────────────
 
+def perform_actions(driver: webdriver.Chrome, actions: list) -> None:
+    """Выполнить последовательность действий перед скриншотом.
+
+    Каждое действие — словарь с ключом click (кликнуть по селектору)
+    и/или wait (дождаться появления селектора)."""
+    wait = WebDriverWait(driver, 10)
+    for action in actions:
+        if "click" in action:
+            wait.until(
+                EC.element_to_be_clickable((By.CSS_SELECTOR, action["click"]))
+            ).click()
+        if "wait" in action:
+            wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, action["wait"])))
+
+
 def take_screenshot(driver: webdriver.Chrome, page: dict, output_dir: str, base_url: str) -> str:
-    """Открыть страницу и сохранить скриншот."""
+    """Открыть страницу и сохранить скриншот.
+
+    Если указан element — снимается только этот блок, иначе весь экран."""
     url = base_url + page["url"]
     driver.get(url)
 
@@ -106,8 +123,18 @@ def take_screenshot(driver: webdriver.Chrome, page: dict, output_dir: str, base_
         import time
         time.sleep(page["delay"])
 
+    # Действия перед снимком — например, открыть модальное окно
+    if "actions" in page:
+        perform_actions(driver, page["actions"])
+
     filepath = os.path.join(output_dir, page["file"])
-    driver.save_screenshot(filepath)
+
+    if "element" in page:
+        element = driver.find_element(By.CSS_SELECTOR, page["element"])
+        element.screenshot(filepath)
+    else:
+        driver.save_screenshot(filepath)
+
     return filepath
 
 

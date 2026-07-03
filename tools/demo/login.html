@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Demo App — Login</title>
+<style>
+  body { font-family: system-ui, sans-serif; background: #f4f5f7; display: flex;
+         align-items: center; justify-content: center; height: 100vh; margin: 0; }
+  form { background: #fff; padding: 32px 40px; border-radius: 8px;
+         box-shadow: 0 2px 8px rgba(0,0,0,.1); width: 280px; }
+  h1 { font-size: 18px; margin: 0 0 20px; }
+  label { display: block; font-size: 13px; color: #555; margin: 12px 0 4px; }
+  input { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
+  button { margin-top: 20px; width: 100%; padding: 10px; background: #2d6cdf; color: #fff;
+           border: none; border-radius: 4px; cursor: pointer; }
+</style>
+</head>
+<body>
+  <form id="login-form">
+    <h1>Demo App</h1>
+    <label for="username">Username</label>
+    <input type="text" name="username" id="username">
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password">
+    <button type="submit">Sign in</button>
+  </form>
+  <script>
+    document.getElementById('login-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      window.location.href = 'dashboard.html';
+    });
+  </script>
+</body>
+</html>

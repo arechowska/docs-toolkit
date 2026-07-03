@@ -187,7 +187,7 @@ No dependencies — transliteration is built in.
 
 ## screenshots — automated screenshots
 
-A scaffold for automating screenshots via Selenium. Opens app pages in a browser, screenshots the needed elements, and compresses the PNGs.
+Automates screenshots via Selenium: opens app pages in a browser, captures either the full page or a single element, optionally clicks through to a modal first, and compresses the resulting PNGs.
 
 ```bash
 python3 screenshots.py --list           # list screens from the config
@@ -195,11 +195,43 @@ python3 screenshots.py --page payment   # capture one screen
 python3 screenshots.py                  # capture all
 ```
 
-Screen settings live in `screenshots.toml`. Requires Selenium and CSS selectors from the app developer.
+Screen settings live in `screenshots.toml`:
+
+```toml
+[[pages]]
+id          = "payment_order"
+url         = "/payments/payment-order"
+file        = "payment_order_form.png"
+element     = ".form-container"   # screenshot just this element, not the whole page
+wait_for    = ".form-container"
+
+[[pages]]
+id          = "sign_modal"
+url         = "/payments/payment-order/1"
+file        = "sign_modal.png"
+element     = ".modal-dialog"
+actions     = [
+  {click = "button.sign-btn"},    # click through to a modal before capturing
+  {wait  = ".modal-dialog"},
+]
+```
+
+Requires Selenium and real CSS selectors from your app:
 
 ```bash
 pip install selenium
 ```
+
+### Try it without a real app
+
+`tools/demo/` contains a tiny self-contained login + form page and a matching config, so you can see the tool actually run without any real target application:
+
+```bash
+python3 -m http.server 8010 --directory tools/demo
+python3 tools/screenshots.py --config tools/demo/screenshots.demo.toml
+```
+
+This logs in, opens the demo form, and saves an element-only screenshot to `tools/demo/output/`.
 
 ## Repository structure
 
@@ -210,6 +242,7 @@ screenshots.py      — automated screenshots via Selenium
 pre-commit          — git hook: doccheck + PNG compression
 snippets.json        — VS Code snippets
 screenshots.toml     — screen config for screenshots.py
+demo/                — self-contained example for screenshots.py, no real app needed
 README.md            — this file
 README.ru.md         — Russian version
 ```
